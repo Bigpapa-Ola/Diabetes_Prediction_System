@@ -1,7 +1,7 @@
 import numpy as np
 import streamlit as st
 import pickle
-
+import sklearn
 model=pickle.load(open("Diabetes_Prediction_System.pkl","rb"))
 
 def diabetes_pred(input_data):
