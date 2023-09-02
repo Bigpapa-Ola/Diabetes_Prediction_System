@@ -2,7 +2,7 @@ import numpy as np
 import streamlit as st
 import pickle
 
-model=pickle.load(open("C:/Users/soppoju narender/Desktop/FS-DataScience/ML_module/diabeties_prediction_system/Diabetes_Prediction_System.pkl","rb"))
+model=pickle.load(open("Diabetes_Prediction_System.pkl","rb"))
 
 def diabetes_pred(input_data):
     input_data_array=np.asarray(input_data)
