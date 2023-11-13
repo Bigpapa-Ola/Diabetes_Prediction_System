@@ -52,6 +52,7 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
 # Define custom CSS for styling
 custom_css = """
 <style>
@@ -101,21 +102,17 @@ def main():
     st.markdown("Fill in the information below to predict your diabetes status.")
     
     st.markdown("<strong>0 = No</strong> and <strong>1 = Yes</strong>", unsafe_allow_html=True)
-    heart_disease = st.selectbox('Heart disease history', {0: 'No', 1: 'Yes'})
-    hypertension = st.selectbox('Hypertension', {0: 'No', 1: 'Yes'})
-
-    st.markdown("<strong>0 = Female</strong>, <strong>1 = Male</strong>, <strong>2 = Others</strong>", unsafe_allow_html=True)
-    gender = st.selectbox('Gender', {0: 'Female', 1: 'Male', 2: 'Others'})
-
-    st.markdown("<strong>0 = Never</strong>, <strong>1 = No info</strong>, <strong>2 = Current</strong>, "
-                "<strong>3 = Former</strong>, <strong>4 = Ever</strong>, <strong>5 = Not Current</strong>",
-                unsafe_allow_html=True)
-    smoking_history = st.selectbox('Smoking History', {0: 'Never', 1: 'No info', 2: 'Current', 3: 'Former', 4: 'Ever', 5: 'Not Current'})
-
-    age = st.text_input('Enter your Age')
-    bmi = st.text_input('Enter BMI Level')
-    HbA1c_level = st.text_input('Enter HbA1c Level')
-    blood_glucose_level = st.text_input('Enter Blood Glucose Level')
+    
+    # Place input controls in the sidebar
+    with st.sidebar:
+        heart_disease = st.selectbox('Heart disease history', {0: 'No', 1: 'Yes'})
+        hypertension = st.selectbox('Hypertension', {0: 'No', 1: 'Yes'})
+        gender = st.selectbox('Gender', {0: 'Female', 1: 'Male', 2: 'Others'})
+        smoking_history = st.selectbox('Smoking History', {0: 'Never', 1: 'No info', 2: 'Current', 3: 'Former', 4: 'Ever', 5: 'Not Current'})
+        age = st.text_input('Enter your Age')
+        bmi = st.text_input('Enter BMI Level')
+        HbA1c_level = st.text_input('Enter HbA1c Level')
+        blood_glucose_level = st.text_input('Enter Blood Glucose Level')
     
     diagnosis = ''
     if st.button("Predict my Result"):
