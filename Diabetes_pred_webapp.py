@@ -101,22 +101,38 @@ def main():
     st.markdown('<h1 class="title">Diabetes Prediction System</h1><br>', unsafe_allow_html=True)
     st.markdown("Fill in the information below to predict your diabetes status.")
     
-    st.markdown("<strong>0 = No</strong> and <strong>1 = Yes</strong>", unsafe_allow_html=True)
+    # Define options for selectboxes
+    yes_no_options = {'No': 0, 'Yes': 1}
+    gender_options = {'Female': 0, 'Male': 1, 'Others': 2}
+    smoking_history_options = {'Never': 0, 'No info': 1, 'Current': 2, 'Former': 3, 'Ever': 4, 'Not Current': 5}
     
     # Place input controls in the sidebar
     with st.sidebar:
-        heart_disease = st.selectbox('Heart disease history', {0: 'No', 1: 'Yes'})
-        hypertension = st.selectbox('Hypertension', {0: 'No', 1: 'Yes'})
-        gender = st.selectbox('Gender', {0: 'Female', 1: 'Male', 2: 'Others'})
-        smoking_history = st.selectbox('Smoking History', {0: 'Never', 1: 'No info', 2: 'Current', 3: 'Former', 4: 'Ever', 5: 'Not Current'})
-        age = st.text_input('Enter your Age')
-        bmi = st.text_input('Enter BMI Level')
-        HbA1c_level = st.text_input('Enter HbA1c Level')
-        blood_glucose_level = st.text_input('Enter Blood Glucose Level')
+        heart_disease = st.selectbox('Heart disease history', list(yes_no_options.keys()))
+        hypertension = st.selectbox('Hypertension', list(yes_no_options.keys()))
+        gender = st.selectbox('Gender', list(gender_options.keys()))
+        smoking_history = st.selectbox('Smoking History', list(smoking_history_options.keys()))
+    
+    age = st.text_input('Enter your Age')
+    bmi = st.text_input('Enter BMI Level')
+    HbA1c_level = st.text_input('Enter HbA1c Level')
+    blood_glucose_level = st.text_input('Enter Blood Glucose Level')
     
     diagnosis = ''
     if st.button("Predict my Result"):
+        # Convert selected options to numerical values
+        heart_disease = yes_no_options[heart_disease]
+        hypertension = yes_no_options[hypertension]
+        gender = gender_options[gender]
+        smoking_history = smoking_history_options[smoking_history]
+        
         diagnosis = diabetes_pred([heart_disease, hypertension, gender, smoking_history, age, bmi, HbA1c_level, blood_glucose_level])
+    
+    st.markdown("<h1 class='title'>" + diagnosis + "</h1>", unsafe_allow_html=True)
+
+if __name__ == '__main__':
+    main()
+
     
     st.markdown("<h1 class='title'>" + diagnosis + "</h1>", unsafe_allow_html=True)
 
