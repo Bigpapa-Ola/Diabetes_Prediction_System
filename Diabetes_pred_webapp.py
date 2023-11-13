@@ -16,6 +16,42 @@ def diabetes_pred(input_data):
     else:
         return "SORRY, YOU HAVE DIABETES"
 
+def set_bg_hack_url():
+    '''
+    A function to unpack an image from url and set as bg.
+    Returns
+    -------
+    The background.
+    '''
+        
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background: url("https://img.freepik.com/premium-photo/background-diabetic-disease-concept-with-copy-space-world-diabetes-day-banner_132254-879.jpg");
+             background-size: cover
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+set_bg_hack_url()
+
+st.markdown(
+    """
+    <style>
+    /* CSS for title */
+    .title {
+        font-size: 36px;
+        color: white; /* Black font color */
+        text-align: center;
+        background-color: black; /* White background color */
+        padding: 10px; /* Add padding for spacing */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 # Define custom CSS for styling
 custom_css = """
 <style>
@@ -61,7 +97,7 @@ def main():
     # Add custom CSS to the page
     st.markdown(custom_css, unsafe_allow_html=True)
 
-    st.title("Diabetes Prediction System")
+    st.markdown('<h1 class="title">Diabetes Prediction System</h1><br>', unsafe_allow_html=True)
     st.markdown("Fill in the information below to predict your diabetes status.")
     
     st.markdown("<strong>0 = No</strong> and <strong>1 = Yes</strong>", unsafe_allow_html=True)
@@ -85,7 +121,7 @@ def main():
     if st.button("Predict my Result"):
         diagnosis = diabetes_pred([heart_disease, hypertension, gender, smoking_history, age, bmi, HbA1c_level, blood_glucose_level])
     
-    st.markdown("<div class='success-message'>" + diagnosis + "</div>", unsafe_allow_html=True)
+    st.markdown("<h1 class='title'>" + diagnosis + "</h1>", unsafe_allow_html=True)
 
 if __name__ == '__main__':
     main()
