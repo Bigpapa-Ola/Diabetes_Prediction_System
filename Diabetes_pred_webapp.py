@@ -2,41 +2,90 @@ import numpy as np
 import streamlit as st
 import pickle
 import sklearn
-model=pickle.load(open("Diabetes_Prediction_System.pkl","rb"))
 
+# Load the machine learning model
+model = pickle.load(open("Diabetes_Prediction_System.pkl", "rb"))
+
+# Function to predict diabetes
 def diabetes_pred(input_data):
-    input_data_array=np.asarray(input_data)
-    input_data_reshape=input_data_array.reshape(1,-1)
-    prediction=model.predict(input_data_reshape)
-    print(prediction)
-    if (prediction[0] == 0):
-        return "HURRAY!! YOU DONT HAVE DIABETES"
+    input_data_array = np.asarray(input_data)
+    input_data_reshape = input_data_array.reshape(1, -1)
+    prediction = model.predict(input_data_reshape)
+    if prediction[0] == 0:
+        return "HURRAY!! YOU DON'T HAVE DIABETES"
     else:
-        return "SORRY YOU HAVE DIABETES"
-    
+        return "SORRY, YOU HAVE DIABETES"
+
+# Define custom CSS for styling
+custom_css = """
+<style>
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1 {
+    text-align: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+select, input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 5px;
+    margin: 5px;
+}
+button {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #005F7F;
+}
+.success-message {
+    text-align: center;
+    font-weight: bold;
+    padding: 20px;
+}
+</style>
+"""
+
 def main():
+    # Add custom CSS to the page
+    st.markdown(custom_css, unsafe_allow_html=True)
+
     st.title("Diabetes Prediction System")
-    #['gender', 'age', 'hypertension', 'heart_disease', 'smoking_history',
-     #  'bmi', 'HbA1c_level', 'blood_glucose_level', 'diabetes']
-     #heart_disease=st.selectbox('Heart diasease History',['No ','Yes'])
- #  hypertension=st.selectbox('Hypertension',['No','Yes'])
-  # gender=st.selectbox('gender',['Female','Male','others'])
- #  smoking_history=st.selectbox('Smoking History', ['Never','No info','current','former','ever','not current'])'''
-    st.markdown(  "--->    0 = No and 1 = Yes")
-    heart_disease=st.selectbox('Heart diasease History', {0:'no',1:'yes'})
-    hypertension=st.selectbox('Hypertension', {0:'no',1:'yes'})
-    st.markdown( "--->   0 = Female, 1 = Male , 2 = Others")
-    gender=st.selectbox('gender', {0:'Female',1:'Male',2:'others'})
-    st.markdown(''''"Never',1='No info',2='current',3='former',4='ever',5='not current''')
-    smoking_history=st.selectbox('Smoking History', {0:'Never',1:'No info',2:'current',3:'former',4:'ever',5:'not current'})
-    age=st.text_input('Enter your Age')
-    bmi=st.text_input('Enter bmi Level')
-    HbA1c_level=st.text_input('Enter HbA1c_level Level')
-    blood_glucose_level=st.text_input('Enter blood_glucose_level ')
-    diagnosis=''
-    if st.button("Predict my Result"):
-        diagnosis=diabetes_pred([heart_disease, hypertension,gender, smoking_history,age, bmi, HbA1c_level,blood_glucose_level])
-    st.success(diagnosis)
+    st.markdown("Fill in the information below to predict your diabetes status.")
     
+    st.markdown("<strong>0 = No</strong> and <strong>1 = Yes</strong>", unsafe_allow_html=True)
+    heart_disease = st.selectbox('Heart disease history', {0: 'No', 1: 'Yes'})
+    hypertension = st.selectbox('Hypertension', {0: 'No', 1: 'Yes'})
+
+    st.markdown("<strong>0 = Female</strong>, <strong>1 = Male</strong>, <strong>2 = Others</strong>", unsafe_allow_html=True)
+    gender = st.selectbox('Gender', {0: 'Female', 1: 'Male', 2: 'Others'})
+
+    st.markdown("<strong>0 = Never</strong>, <strong>1 = No info</strong>, <strong>2 = Current</strong>, "
+                "<strong>3 = Former</strong>, <strong>4 = Ever</strong>, <strong>5 = Not Current</strong>",
+                unsafe_allow_html=True)
+    smoking_history = st.selectbox('Smoking History', {0: 'Never', 1: 'No info', 2: 'Current', 3: 'Former', 4: 'Ever', 5: 'Not Current'})
+
+    age = st.text_input('Enter your Age')
+    bmi = st.text_input('Enter BMI Level')
+    HbA1c_level = st.text_input('Enter HbA1c Level')
+    blood_glucose_level = st.text_input('Enter Blood Glucose Level')
+    
+    diagnosis = ''
+    if st.button("Predict my Result"):
+        diagnosis = diabetes_pred([heart_disease, hypertension, gender, smoking_history, age, bmi, HbA1c_level, blood_glucose_level])
+    
+    st.markdown("<div class='success-message'>" + diagnosis + "</div>", unsafe_allow_html=True)
+
 if __name__ == '__main__':
     main()
