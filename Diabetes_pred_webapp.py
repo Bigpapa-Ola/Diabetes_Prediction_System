@@ -99,7 +99,7 @@ def main():
     st.markdown(custom_css, unsafe_allow_html=True)
 
     st.markdown('<h1 class="title">Diabetes Prediction System</h1><br>', unsafe_allow_html=True)
-    st.markdown("Fill in the information below to predict your diabetes status.")
+   
     
     # Define options for selectboxes
     yes_no_options = {'No': 0, 'Yes': 1}
@@ -108,15 +108,15 @@ def main():
     
     # Place input controls in the sidebar
     with st.sidebar:
+        st.markdown("Please fill the following Details To predict")
         heart_disease = st.selectbox('Heart disease history', list(yes_no_options.keys()))
         hypertension = st.selectbox('Hypertension', list(yes_no_options.keys()))
         gender = st.selectbox('Gender', list(gender_options.keys()))
         smoking_history = st.selectbox('Smoking History', list(smoking_history_options.keys()))
-    
-    age = st.text_input('Enter your Age')
-    bmi = st.text_input('Enter BMI Level')
-    HbA1c_level = st.text_input('Enter HbA1c Level')
-    blood_glucose_level = st.text_input('Enter Blood Glucose Level')
+        age = st.text_input('Enter your Age')
+        bmi = st.text_input('Enter BMI Level')
+        HbA1c_level = st.text_input('Enter HbA1c Level')
+        blood_glucose_level = st.text_input('Enter Blood Glucose Level')
     
     diagnosis = ''
     if st.button("Predict my Result"):
@@ -133,8 +133,3 @@ def main():
 if __name__ == '__main__':
     main()
 
-    
-    st.markdown("<h1 class='title'>" + diagnosis + "</h1>", unsafe_allow_html=True)
-
-if __name__ == '__main__':
-    main()
